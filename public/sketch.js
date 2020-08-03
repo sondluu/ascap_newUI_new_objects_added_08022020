@@ -15,6 +15,7 @@ var input;
 
 let detector, detections;
 let kitty, phonesound, phone, bearsound, bear, cupsound, cup, bottlesound, bottle, booksound, book, plant, plantsound, apple, applesound, scissors, scissorssound;
+let toothbrush, toothbrushsound;
 let time = 0;
 let socket;
 //let font1_shadow; let cam_y =-220;
@@ -45,8 +46,12 @@ let prepreapplereceivenum=0;
 let scissorsreceivenum=0;
 let prescissorsreceivenum=0;
 let preprescissorsreceivenum=0;
+let toothbrushreceivenum=0;
+let pretoothbrushreceivenum=0;
+let prepretoothbrushreceivenum=0;
 let buttonState = false; let button;
 let bearx,beary,phonex, phoney, cupx, cupy, bookx, booky, bottlex, bottley, plantx, planty, applex, appley, scissorsx, scissorsy;
+let toothbrushx, toothbrushy;
 
 let recorder, soundFile;
 let timer = 4; //timer starts at 4 second
@@ -74,6 +79,8 @@ function preload() {
   applesound = loadSound('https://cdn.glitch.com/b4fa8d15-f140-4650-8abf-8ca7bc9325ee%2FAscap_Teddy_001.mp3?v=1596407943314');
   scissors = loadImage('https://cdn.glitch.com/b4fa8d15-f140-4650-8abf-8ca7bc9325ee%2Fscissors.jpg?v=1596410171381');
   scissorssound = loadSound('https://cdn.glitch.com/b4fa8d15-f140-4650-8abf-8ca7bc9325ee%2FAscap_Cup_001.mp3?v=1596410186480');
+  toothbrush = loadImage('https://cdn.glitch.com/b4fa8d15-f140-4650-8abf-8ca7bc9325ee%2Ftoothbrush.jpeg?v=1596472269998');
+  toothbrushsound = loadSound('https://cdn.glitch.com/b4fa8d15-f140-4650-8abf-8ca7bc9325ee%2FAscap_Bottle_001.mp3?v=1596472287595');
 }
 
 function setup() {
@@ -155,6 +162,8 @@ function setup() {
  appley = random(400);
  scissorsx = random(600)+100;
  scissorsy = random(400);
+ toothbrushx = random(600)+100;
+ toothbrushy = random(400);
   
   //getting all the HTML elements for Start/Stop Music Switch
   faderSection = document.getElementById("switch");
@@ -402,6 +411,9 @@ if(switchState){
   if(scissorsreceivenum==preprescissorsreceivenum){
     scissorssound.setVolume(0);
   }
+  if(toothbrushreceivenum==prepretoothbrushreceivenum){
+    toothbrushsound.setVolume(0);
+  }
   preprephonereceivenum = prephonereceivenum;
   prephonereceivenum = phonereceivenum;
   preprebearreceivenum = prebearreceivenum;
@@ -416,6 +428,7 @@ if(switchState){
   prepreplantreceivenum = preplantreceivenum;
   prepreapplereceivenum = preapplereceivenum;
   preprescissorsreceivenum = prescissorsreceivenum;
+  prepretoothbrushreceivenum = toothbrushreceivenum;
   }
 }
 
@@ -451,6 +464,8 @@ function switchMusic(){
     applesound.setVolume(0);
     scissorssound.loop();
     scissorssound.setVolume(0);
+    toothbrushsound.loop();
+    toothbrushsound.setVolume(0);
     bearx = random(600)+100;
     beary = random(400)+200;
     phonex = random(600)+100;
@@ -467,6 +482,8 @@ function switchMusic(){
     appley = random(400)+200;
     scissorsx = random(600)+100;
     scissorsy = random(400)+200;
+    toothbrushx = random(600)+100;
+    toothbrushy = random(400)+200;
   }
   else{
     bearsound.stop();
@@ -477,6 +494,7 @@ function switchMusic(){
     plantsound.stop();
     applesound.stop();
     scissorssound.stop();
+    toothbrushsound.stop();
   }
 }
 
@@ -602,6 +620,14 @@ booksound.setVolume(1);
     scissorsreceivenum++;
     xxx = scissorsx;
     yyy = scissorsy;
+  }
+  
+  if(data.label == 'toothbrush'){
+    image(toothbrush, toothbrushx, toothbrushy, data.w, data.h);
+    toothbrushsound.setVolume(1);
+    toothbrushreceivenum++;
+    xxx = toothbrushx;
+    yyy = toothbrushy;
   }
   
           noFill();
